@@ -90,11 +90,16 @@ export const Container = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        cursor: pointer;
 
         > div.list-item-content {
           display: flex;
           align-items: center;
+
+          cursor: pointer;
+
+          > input {
+            cursor: pointer;
+          }
 
           > span {
             font-size: 1.6rem;

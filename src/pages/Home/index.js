@@ -44,10 +44,14 @@ function Home() {
   }
 
   function doneTask(id, value, completed) {
-    // console.log({ id, value, completed })
-
     const itensCopy = Array.from(tasks);
     itensCopy.splice(id, 1, { id: id, value: value, completed: !completed });
+    setTasks(itensCopy);
+  }
+
+  function deleteTask(id) {
+    const itensCopy = Array.from(tasks);
+    itensCopy.splice(id, 1);
     setTasks(itensCopy);
   }
 
@@ -69,11 +73,7 @@ function Home() {
     }
 
     setTasksFiltered(itensCopy);
-  }, [filter]);
-
-  useEffect(() => {
-    console.log(tasks);
-  }, [tasks]);
+  }, [filter, tasks]);
 
   return (
     <Container>
@@ -109,6 +109,8 @@ function Home() {
               value={task.value}
               completed={task.completed}
               doneTask={doneTask}
+              deleteTask={deleteTask}
+              filter={filter}
             />
           ))}
         </div>
@@ -129,16 +131,25 @@ function Home() {
   );
 }
 
-function Task({ id, value, completed, doneTask }) {
+function Task({ id, value, completed, doneTask, deleteTask, filter }) {
   return (
     <div className="list-item">
-      <div className="list-item-content">
+      <div 
+        className="list-item-content" 
+        onClick={() => doneTask(id, value, completed)}
+      >
         <input
           type="checkbox"
-          onClick={() => doneTask(id, value, completed)}
+          checked={completed}
         />
         <span className={`${completed && 'completed'}`} >{value}</span>
       </div>
+
+      { filter === 'completed' && (
+        <div className="list-item-delete">
+          <FaTrashAlt size={16} color={'#ccc'} onClick={() => deleteTask(id)} />
+        </div>
+      )}
     </div>
   );
 }
