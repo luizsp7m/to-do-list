@@ -11,25 +11,27 @@ function Home() {
 
   const filters = ['all', 'active', 'completed'];
 
-  const teste = [{
-    id: 0,
-    value: 'Jogar',
-    completed: true,
-  }, {
-    id: 1,
-    value: 'Jogar 2',
-    completed: false,
-  }, {
-    id: 2,
-    value: 'Jogar 3',
-    completed: false,
-  }]
+  // const initialValues = [{
+  //   id: 0,
+  //   name: 'Jogar FF',
+  //   completed: false,
+  // }, {
+  //   id: 1,
+  //   name: 'Programar',
+  //   completed: true,
+  // }, {
+  //   id: 2,
+  //   name: 'Jogar FIFA',
+  //   completed: false,
+  // }]
 
   const [tasksFiltered, setTasksFiltered] = useState([]);
 
-  const [tasks, setTasks] = useState(teste);
+  const [tasks, setTasks] = useState([]);
 
   const [task, setTask] = useState('');
+
+  const [generateId, setGenerateId] = useState(0);
 
   function addNewTask(e) {
     e.preventDefault();
@@ -38,20 +40,39 @@ function Home() {
       return;
     }
 
-    const itensCopy = Array.from(tasks);
-    itensCopy.push({ id: tasks.length, value: task, completed: false });
+    setTasks([...tasks, {
+      id: generateId,
+      name: task,
+      completed: false,
+    }]);
+
+    setGenerateId(generateId + 1);
+
+    setTask('');
+  }
+
+  function doneTask({ id, name, completed }) {
+    const itensCopy = [];
+
+    tasks.map(task => {
+      task.id === id ? itensCopy.push({ id, name, completed: !completed }) : itensCopy.push(task);
+    })
+
     setTasks(itensCopy);
   }
 
-  function doneTask(id, value, completed) {
-    const itensCopy = Array.from(tasks);
-    itensCopy.splice(id, 1, { id: id, value: value, completed: !completed });
+  function deleteTask({ id }) {
+    const itensCopy = [];
+
+    tasks.map(task => {
+      task.id !== id && itensCopy.push(task);
+    });
+
     setTasks(itensCopy);
   }
 
-  function deleteTask(id) {
-    const itensCopy = Array.from(tasks);
-    itensCopy.splice(id, 1);
+  function deleteAll() {
+    const itensCopy = [];
     setTasks(itensCopy);
   }
 
@@ -72,8 +93,10 @@ function Home() {
       })
     }
 
+    console.log(itensCopy);
+
     setTasksFiltered(itensCopy);
-  }, [filter, tasks]);
+  }, [tasks, filter]);
 
   return (
     <Container>
@@ -102,17 +125,24 @@ function Home() {
         </form>
 
         <div className="list">
-          {tasksFiltered.map(task => (
+          {tasksFiltered.map(task =>
             <Task
               key={task.id}
               id={task.id}
-              value={task.value}
+              name={task.name}
               completed={task.completed}
               doneTask={doneTask}
               deleteTask={deleteTask}
               filter={filter}
             />
-          ))}
+          )}
+
+          {filter === 'completed' && (
+            <button onClick={deleteAll}>
+              <FaTrashAlt size={16} color={'#fafafa'} />
+              <span>delete all</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -131,23 +161,23 @@ function Home() {
   );
 }
 
-function Task({ id, value, completed, doneTask, deleteTask, filter }) {
+function Task({ id, name, completed, doneTask, deleteTask, filter }) {
   return (
     <div className="list-item">
-      <div 
-        className="list-item-content" 
-        onClick={() => doneTask(id, value, completed)}
+      <div
+        className="list-item-content"
       >
         <input
           type="checkbox"
           checked={completed}
+          onClick={() => doneTask({id, name, completed})}
         />
-        <span className={`${completed && 'completed'}`} >{value}</span>
+        <span className={`${completed && 'completed'}`} >{name}</span>
       </div>
 
       { filter === 'completed' && (
         <div className="list-item-delete">
-          <FaTrashAlt size={16} color={'#ccc'} onClick={() => deleteTask(id)} />
+          <FaTrashAlt size={16} color={'#ccc'} onClick={() => deleteTask({ id })} />
         </div>
       )}
     </div>

@@ -34,6 +34,8 @@ export const Container = styled.div`
         display: flex;
         justify-content: center;
 
+        text-transform: capitalize;
+
         width: 33.33%;
 
         display: flex;
@@ -73,6 +75,7 @@ export const Container = styled.div`
         padding: 1.25rem 2rem;
         border-radius: .5rem;
         cursor: pointer;
+        transition: filter .25s;
 
         &:hover {
           filter: brightness(.9);
@@ -85,6 +88,31 @@ export const Container = styled.div`
       display: flex;
       flex-direction: column;
       gap: 2rem;
+
+      > button {
+        background: #EB5757;
+        border: 0;
+        outline: 0;
+        display: flex;
+        align-items: center;
+        padding: 1.25rem 2rem;
+        gap: 1rem;
+        border-radius: .5rem;
+
+        max-width: 13rem;
+        align-self: flex-end;
+        cursor: pointer;
+        transition: filter .25s;
+        margin-top: 2rem;
+
+        &:hover {
+          filter: brightness(.9);
+        } 
+
+        > span {
+          color: #fafafa;
+        }
+      }
 
       > div.list-item {
         display: flex;
@@ -115,7 +143,12 @@ export const Container = styled.div`
         }
 
         > div.list-item-delete {
+          cursor: pointer;
+          transition: filter .25s;
           
+          &:hover {
+            filter: brightness(.9);
+          }
         }
       }
     }
