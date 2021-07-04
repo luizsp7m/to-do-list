@@ -20,6 +20,12 @@ const GlobalStyle = createGlobalStyle`
   body, button, input {
     font-family: 'Raleway', sans-serif;
   }
+
+  @media(max-width: 425px) {
+    html {
+      font-size: 50%;
+    }
+  }
 `
 
 export default GlobalStyle;

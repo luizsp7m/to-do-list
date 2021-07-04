@@ -11,10 +11,17 @@ export const Container = styled.div`
       font-weight: 700;
       font-size: 3.6rem;
       color: ${props => props.theme.textColor};
+      position: relative;
+
+      .switch {
+        position: absolute;
+        left: 14rem;
+        bottom: .5rem;
+      }
     }
 
   > div.content {
-      width: 100%;
+      width: 90%;
       max-width: 425px;
 
     > div.filter {
@@ -111,6 +118,12 @@ export const Container = styled.div`
 
         > span {
           color: #fafafa;
+        }
+
+        @media(max-width: 425px) {
+          > span {
+            display: none;
+          }
         }
       }
 

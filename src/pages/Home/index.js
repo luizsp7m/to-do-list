@@ -95,7 +95,22 @@ function Home() {
     <Container>
       <ToastContainer />
 
-      <h1 className="title">#todo</h1>
+      <h1 className="title">
+        #todo
+
+        <Switch
+          onChange={toggle}
+          onColor='#202C37'
+          offColor='#ccc'
+          checked={theme === 'dark'}
+          checkedIcon={false}
+          uncheckedIcon={false}
+          height={15}
+          width={30}
+          handleDiameter={15}
+          className='switch'
+        />
+      </h1>
 
       <div className="content">
         <div className="filter">
@@ -140,18 +155,6 @@ function Home() {
           )}
         </div>
       </div>
-
-      <Switch
-        onChange={toggle}
-        onColor='#202C37'
-        offColor='#ccc'
-        checked={theme === 'dark'}
-        checkedIcon={false}
-        uncheckedIcon={false}
-        height={15}
-        width={30}
-        handleDiameter={15}
-      />
     </Container>
   );
 }
