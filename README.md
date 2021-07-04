@@ -7,7 +7,7 @@ This is a solution to the [Todo app](https://devchallenges.io/challenges/hH6PbOH
 
 ### The challenge
 
-Create a todo app following given designs. Use Front-end libraries like React or Vue. Don’t look at the existing solution. Fulfill user stories below:
+Create a todo app following given designs. Fulfill user stories below:
 
 - User story: I can add a new task
 - User story: I can complete a task
