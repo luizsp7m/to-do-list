@@ -4,26 +4,15 @@ import Switch from 'react-switch';
 import { ThemeContext } from '../../context/ThemeStore';
 import { FaTrashAlt } from 'react-icons/fa';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Home() {
   const { theme, toggle } = useContext(ThemeContext);
 
   const [filter, setFilter] = useState('all');
 
   const filters = ['all', 'active', 'completed'];
-
-  // const initialValues = [{
-  //   id: 0,
-  //   name: 'Jogar FF',
-  //   completed: false,
-  // }, {
-  //   id: 1,
-  //   name: 'Programar',
-  //   completed: true,
-  // }, {
-  //   id: 2,
-  //   name: 'Jogar FIFA',
-  //   completed: false,
-  // }]
 
   const [tasksFiltered, setTasksFiltered] = useState([]);
 
@@ -49,6 +38,8 @@ function Home() {
     setGenerateId(generateId + 1);
 
     setTask('');
+
+    toast.success('Added!');
   }
 
   function doneTask({ id, name, completed }) {
@@ -69,6 +60,8 @@ function Home() {
     });
 
     setTasks(itensCopy);
+
+    toast.error('Removed!');
   }
 
   function deleteAll() {
@@ -100,6 +93,8 @@ function Home() {
 
   return (
     <Container>
+      <ToastContainer />
+
       <h1 className="title">#todo</h1>
 
       <div className="content">
@@ -170,7 +165,7 @@ function Task({ id, name, completed, doneTask, deleteTask, filter }) {
         <input
           type="checkbox"
           checked={completed}
-          onClick={() => doneTask({id, name, completed})}
+          onClick={() => doneTask({ id, name, completed })}
         />
         <span className={`${completed && 'completed'}`} >{name}</span>
       </div>
